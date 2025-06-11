@@ -1,0 +1,17 @@
+<%-include('partials/header.ejs')%>
+<div class="edit-blog">
+    <h2>Edit Your Blog</h2>
+    
+    <div class="card">
+    
+
+       <form action="/update-blog/ <%= blogId %>" method="POST" class="form-group">
+        <!--<label for="content">Post</label>-->
+        <textarea id="newPost" name="newPost" rows="4" cols="15" placeholder="Edit Post"><%=blog%></textarea>
+    
+        <button type="submit">Update Post</button>
+       </form>
+    </div>
+   
+    
+</div>
