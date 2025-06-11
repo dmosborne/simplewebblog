@@ -1,0 +1,40 @@
+<%-include('partials/header.ejs')%>
+
+
+<button><a href="/" class="create-blog btn btn-primary btn-lg">Create a post!</a></button>
+<h1 class=" my-4">All Blog Posts</h1>
+    <div class="list">
+    <div class="container">
+       <%if (newPost.length > 0) {%>
+     
+     <% for (let i=0; i < newPost.length; i++) {%>     
+        <div id="blog-<%= i %>" class="container my-4">
+            <div class="blog-post">
+                
+                <%= newPost[i]%>
+                <p>- <%=author[i]%></p>
+                <small>Posted on: <%= day%></small>
+                
+                
+               <form action="/edit-blog/<%= i %>" method="GET" style="display: inline;">
+                   <button type="submit" class="btn btn-sm btn-warning">Edit</button>
+                </form>
+                
+
+                <form action="/delete-blog/<%= i %>" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure')">Delete</button>
+                </form>
+            </div>
+
+        </div>
+        
+        <% } %>
+    
+        <% } else { %>
+
+            <p class="text-center">No blogs posted yet.</p>
+        
+        <% } %>
+    </div>
+    </div>
+    <%-include('partials/footer.ejs')%>
