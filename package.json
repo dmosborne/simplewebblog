@@ -4,7 +4,6 @@
     "main":"index.js",
     "type":"module",
     "scripts": {
-      "yarn": "node index.js"
     },
     "keywords": [],
     "author": "",
