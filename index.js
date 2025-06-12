@@ -2,7 +2,6 @@ import bodyParser from "body-parser";
 import express from "express";
 
 const app = express();
-const express = require('express');
 const PORT = process.env.PORT || 3000;
 
 
