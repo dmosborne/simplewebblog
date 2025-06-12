@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 
 const app = express();
+const express = require('express');
 const PORT = process.env.PORT || 3000;
 
 
@@ -95,5 +96,6 @@ app.post("/delete-blog/:id", (req, res) => {
 });
 
 
-app.listen(PORT, '0.0.0.0' () => 
-console.log (`Listening on port ${PORT}`));
+app.listen(PORT, '0.0.0.0' () => {
+console.log (`Listening on port ${PORT}`);
+});
