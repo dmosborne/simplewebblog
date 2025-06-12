@@ -2,7 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 
 const app = express();
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 3000;
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -95,6 +95,6 @@ app.post("/delete-blog/:id", (req, res) => {
 });
 
 
-app.listen(port, '0.0.0.0' () => {
+app.listen(port, () => {
 console.log (`Listening on port ${port}`);
 });
