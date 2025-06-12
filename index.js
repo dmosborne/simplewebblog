@@ -3,7 +3,7 @@ import express from "express";
 
 const app = express();
 const express = require('express');
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 
 
 app.use(bodyParser.urlencoded({extended: true}));
