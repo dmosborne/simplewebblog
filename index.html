@@ -10,40 +10,6 @@
 </head>
 
   <body>
-    <script>
-        <%-include('partials/header.ejs') %>
-
-    <head>
-        <meta charset="UTF-8".>
-       <meta name="viewport" content="width=device-width, inital-scale=1.0">
-        <title>Web Blog</title>
-    </head>
-
-    <body>
-        <button><a href="/blogs" class="btn btn-primary btn-lg">View Blogs</a></button>
-
-        <h1 class="day">Today's Date: <%=day%></h1>
-        <div class="list">
-        <ul>
-        <%for (let i=0; i<locals.newPost.length;i++) {%>
-            <li>
-                <%=newPost[i];%>
-                <P>- <%=author[i]%></P>
-                <p>(<%=day%>)</p>
-                    <% } %>
-            </li>
-
-        </ul>
-
-        <form action="/submit" method="POST" class="form-group">
-           <textarea type="text" id="newPost" name="newPost" rows="4" cols="15" placeholder="Create a Post"></textarea>
-            <input type="text" id="author" name="author" placeholder="Enter Your Name (Optional)">
-            <button type="submit">Post</button>
-        </form> 
-    </div>
-    </body>
-
-    <%-include('partials/footer.ejs')%>
-    </script>
+    <script src="views/index.ejs" type="text/javascript"></script>
   </body>
 </html>
