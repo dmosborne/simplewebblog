@@ -48,6 +48,8 @@ h2{
 
 .btn {
     text-decoration-line: none;
+    font-weight: 600;  
+    font-size: 1.2rem;
 }
 
 .blog-post {
@@ -84,8 +86,6 @@ p {
 .email {
     margin-left: 40%;
     gap: 20px;
-    font-weight: 600;  
-    font-size: 1.2rem;
     text-decoration-line: none;
 }
 
