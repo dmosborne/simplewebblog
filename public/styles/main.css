@@ -46,6 +46,9 @@ h2{
     margin: 0px, 10px;
 }
 
+.btn {
+    text-decoration-line: none;
+}
 
 .blog-post {
     width: 100%;
@@ -82,7 +85,8 @@ p {
     margin-left: 40%;
     gap: 20px;
     font-weight: 600;  
-    font-size: 1.2rem
+    font-size: 1.2rem;
+    text-decoration-line: none;
 }
 
 small{
