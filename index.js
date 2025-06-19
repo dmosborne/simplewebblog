@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
+const session = require("express-session");
 
 
 const app = express();
@@ -10,6 +11,11 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 const storage = multer.diskStorage({
     destination: 'public/uploads/',
@@ -37,28 +43,36 @@ app.get("/", (_req, res) =>{
     newPost: addPost,
     author: yourName,
     myFile: images,
-    
+    sessionUser: _req.session.username,
     });
     });
-    
+
+app.post('/login', (req, res) => {
+    const username = req.body.username?.trim();
+    if (username) req.session.username = username;
+    res.redirect('/');
+});
+          
+
 
 app.post("/submit", upload.single('myFile'), (req, res) => {
+
+    if (!req.session.username) {
+        return res.status(403).send("You must log in before posting.");
+      }
+
     const newPost = req.body.newPost;
-    const author = req.body.author;
+    const author = req.session.username;
     const file = req.file;
 
     if (newPost?.trim())
     addPost.push(newPost);
-    //else addPost.push("(No content)");
-
-
+   
     if (author?.trim())
-    yourName.push(author);
-    //else yourName.push("Anonymous");
-    
+    yourName.push(author);  
 
     if (file) images.push(file.filename);
-   //else images.push(null);
+   
     
     res.redirect("/");
 });
@@ -78,7 +92,7 @@ const d = new Date().toLocaleDateString("en-US", {
         newPost: addPost,
         author: yourName,
         myFile: images,
-
+       
         });
     });
 
@@ -86,14 +100,23 @@ const d = new Date().toLocaleDateString("en-US", {
 app.get("/edit-blog/:id", (req, res) => {
     const blogId = parseInt(req.params.id);
     const blog = addPost[blogId];
+    const storedAuthor = yourName[blogId];
 
-
-    if (blog) {
-        res.render("edit-blogs.ejs", { blog, blogId });
-    } else {
-        res.redirect("/blogs");
+    if (blogId >= addPost.length || blogId < 0) {
+        return res.status(404).send("Post not found");
     }
+    
+    if (!req.session.username) {
+        return res.status(403).send("You must be logged in to edit posts.");
+      }
+
+    if (req.session.username !== storedAuthor) {
+        return res.status(403).send("You can only edit your own posts.");
+      }
+
+        res.render("edit-blogs.ejs", { blog, blogId });
     });
+      
 
 app.post("/update-blog/:id", (req, res) => {
     const blogId = parseInt(req.params.id);
@@ -108,11 +131,18 @@ app.post("/update-blog/:id", (req, res) => {
 
 app.post("/delete-blog/:id", (req, res) => {
     const blogId = parseInt(req.params.id);
-    addPost.splice(blogId, 1);
-    res.redirect("/blogs");
-});
+     if (req.session.username !== yourName[blogId]) {
+        return res.redirect("/blogs");
+       }
 
+        addPost.splice(blogId, 1);
+        yourName.splice(blogId, 1);
+        images.splice(blogId, 1);
 
+        res.redirect("/blogs");
+    });
+      
+    
 app.listen(port, () => {
 console.log (`Listening on port ${port}`);
 });
