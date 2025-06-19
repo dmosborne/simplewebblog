@@ -6,27 +6,38 @@
         <title>Web Blog</title>
     </head>
 
-    <body>
+<body>
         <button><a href="/blogs" class="btn btn-primary btn-lg">View Blogs</a></button>
 
         <h1 class="day">Today's Date: <%=day%></h1>
         <div class="list">
         <ul>
-        <%for (let i=0; i<locals.newPost.length;i++) {%>
+        <%for (let i=0; i<newPost.length;i++) {%>
             <li>
                 <%=newPost[i];%>
                 <P>- <%=author[i]%></P>
                 <p>(<%=day%>)</p>
+                <% if (myFile && myFile[i]) { %>
+                    <img src="/uploads/<%= myFile[i] %>" alt="Uploaded Image" style="max-width: 100px;" />
+                    <%} %>
                     <% } %>
+         
             </li>
 
         </ul>
-
-        <form action="/submit" method="POST" class="form-group">
-           <textarea type="text" id="newPost" name="newPost" rows="4" cols="15" placeholder="Create a Post"></textarea>
-            <input type="text" id="author" name="author" placeholder="Enter Your Name (Optional)">
-            <button type="submit">Post</button>
-        </form> 
+        
+        <form action="/submit" method="POST" enctype="multipart/form-data">
+            <fieldset>
+                <textarea id="newPost" name="newPost" rows="4" cols="15" placeholder="Create a Post" required></textarea>
+        
+                <input type="file" id="myFile" name="myFile" accept="image/*" required />
+        
+                <input type="text" id="author" name="author" placeholder="Enter Your Name (Optional)">
+        
+                <button type="submit">Post</button>
+            </fieldset>
+        </form>
+          
     </div>
     </body>
 
