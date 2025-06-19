@@ -1,15 +1,19 @@
 <%-include('partials/header.ejs') %>
 
-    <head>
-        <meta charset="UTF-8".>
-       <meta name="viewport" content="width=device-width, inital-scale=1.0">
-        <title>Web Blog</title>
-    </head>
 
-<body>
+    <body>
+        <% if (!sessionUser) { %>
+            <form action="/login" method="POST">
+                <input name="username" id="username" placeholder="Sign in to post" required />
+                <button type="submit">Log In</button>
+            </form>
+            <% } else { %>
+                <p>Welcome, <strong><%= sessionUser %></strong>!</p>
+                <% } %>
         <button><a href="/blogs" class="btn btn-primary btn-lg">View Blogs</a></button>
 
         <h1 class="day">Today's Date: <%=day%></h1>
+
         <div class="list">
         <ul>
         <%for (let i=0; i<newPost.length;i++) {%>
@@ -28,11 +32,10 @@
         
         <form action="/submit" method="POST" enctype="multipart/form-data">
             <fieldset>
-                <textarea id="newPost" name="newPost" rows="4" cols="15" placeholder="Create a Post" required></textarea>
-        
-                <input type="file" id="myFile" name="myFile" accept="image/*"/>
-        
                 <input type="text" id="author" name="author" placeholder="Enter Your Name (Optional)">
+                <textarea id="newPost" name="newPost" rows="4" cols="15" placeholder="Create a Post" required></textarea>
+                <input type="file" id="myFile" name="myFile" accept="image/*"/>
+                      
         
                 <button type="submit">Post</button>
             </fieldset>
