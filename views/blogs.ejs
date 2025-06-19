@@ -14,6 +14,9 @@
                 <%= newPost[i]%>
                 <p>- <%=author[i]%></p>
                 <small>Posted on: <%= day%></small>
+                <% if (myFile && myFile[i]) { %>
+                <img src="/uploads/<%= myFile[i] %>" alt="Uploaded Image" style="max-width: 100px;" />
+                <%} %>
                 
                 
                <form action="/edit-blog/<%= i %>" method="GET" style="display: inline;">
